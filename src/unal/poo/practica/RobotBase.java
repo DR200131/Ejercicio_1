@@ -1,7 +1,7 @@
 package unal.poo.practica;
 
 import becker.robots.*;
-
+import java.util.Scanner;
 /** 
  * Practica de los conceptos de Programacion Estructurada
  * @author Fabian Andres Giraldo */
@@ -19,42 +19,51 @@ public class RobotBase
             
             //Direction.NORTH, EAST, SOUTH, WEST
             //Definicion de la ubicacion del robot, Ciudad, posicion, Direccion, Numero things en el bolso.
-            estudiante = new Robot(objetos,0, 2, Direction.EAST,10);
+            estudiante = new Robot(objetos,0, 1, Direction.SOUTH,40);
             
-	    //Mover una interseccion en el sentido al cual este apuntando el objeto.
-            estudiante.move ();
+            int l;
+            int[] array = new int [6];
+            String frase = "/0";
             
-            //Girar a la izquierda
-            estudiante.turnLeft();
-            
-            //Tomando decisiones, Si puedo tomar un Thing
-            boolean puedeTomar = estudiante.canPickThing();
-            
-            //Tomar un Thing
-            if(puedeTomar == true)
-               estudiante.pickThing();
-            
-            //Especifica el numero de Thing que tiene en robot en el bolso
-            int numeroThings = estudiante.countThingsInBackpack();
-            
-            //Poner Thing, se debe validar que tenga things en el bolso
-            estudiante.putThing();
-                       
-            //Si el frente esta libre de Wall
-            estudiante.frontIsClear();
-            
-            //Invocando una funcion
-            creacionFuncion(4);
-            
-            //Toman un Thing
-            estudiante.pickThing();
-            
-            
-	}
-        
-        public static void creacionFuncion(int parametroEntrada){
-            for (int i = 0; i < parametroEntrada; i++) 
-                estudiante.move();
+            for(int c = 0; c <= 4; c++)
+            {
+                if(estudiante.canPickThing() == true)
+                {
+                    System.out.println(frase);
+                }
+                else
+                {
+                    for(l = 0; l <= 2; l++)
+                    {
+                        estudiante.move();
+                        if(estudiante.canPickThing() == true)
+                        {
+                            array[l] = 1;
+                        }
+                    }
+                    
+                    estudiante.turnLeft();
+                    estudiante.move();
+                    if(estudiante.canPickThing() == true)
+                    {
+                        array[1 + l] = 1;
+                    }
+                    estudiante.turnLeft();
+                    
+                    for(int r = 4; r <= 6; r++)
+                    {
+                        estudiante.move();
+                        if(estudiante.canPickThing() == true)
+                        {
+                            array[r] = 1;
+                        }
+                    }
+                    estudiante.turnLeft();
+                    estudiante.turnLeft();
+                    estudiante.turnLeft();
+                    estudiante.move();
+                }
+            }
         }
 }
 
